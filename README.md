@@ -28,4 +28,4 @@ Run `python get.py <question_number>`
 
 You can run `chmod +x get.py` and use it as `./get.py <question_number>`
 
-> If you get warnings don't worry (or you should?) because to certificate is self-signed and I manually turned off the verification
+> If you get warnings don't worry (or you should?) because the certificate is self-signed and I manually turned off the verification
