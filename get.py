@@ -23,11 +23,16 @@ if len(sys.argv) == 1:
 
 
 with requests.Session() as s:
+    index = f"{int(sys.argv[1]):03}"
+
     s.post(f"{BASE_URL}/Login", login_data, verify=False)
-    r = s.get(
-        f"{BASE_URL}/showHomework?hwId={int(sys.argv[1]):03}", verify=False)
+    r = s.get(f"{BASE_URL}/showHomework?hwId={index}", verify=False)
+
     soup = BeautifulSoup(r.content.decode("utf-8"), "html5lib")
     res = soup.find(
         "span", style="font-family:標楷體; color:black; behavior:slide; word-wrap:break-word; word-break:normal; font-weight:bold; font-size:medium;")
+
+    print(index)
     if res:
-        print(res)
+        for line in str(res).split("<br/>")[1:]:
+            print(line.strip())
