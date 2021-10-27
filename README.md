@@ -20,6 +20,8 @@ Finally to setup some config run
 
 `python setup.py`
 
+> If typed the wrong info just Ctrl+C to quit, it won't wipe the data unless you're finished entering these info
+
 ### Unix-like systems
 
 Basically the same but change `python` to `python3` (maybe change `pip` to `pip3`? idk) and run `source env/bin/activate` instead
