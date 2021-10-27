@@ -16,9 +16,13 @@ To install required dependencies run this command
 
 `pip install -r requirements.txt`
 
+Finally to setup some config run
+
+`python setup.py`
+
 ### Unix-like systems
 
-Basically the same but change `python` to `python3` and run `source env/bin/activate` instead
+Basically the same but change `python` to `python3` (maybe change `pip` to `pip3`? idk) and run `source env/bin/activate` instead
 
 ## Execution
 
@@ -26,6 +30,12 @@ Run `python get.py <question_number>`
 
 ### Unix-like systems
 
-You can run `chmod +x get.py` and use it as `./get.py <question_number>`
+You can run
+
+`chmod +x get.py`
+
+and use it as
+
+`./get.py <question_number>`
 
 > If you get warnings don't worry (or you should?) because the certificate is self-signed and I manually turned off the verification
