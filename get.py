@@ -5,6 +5,10 @@ from typing import Dict
 
 import requests
 from bs4 import BeautifulSoup
+import urllib3
+from urllib3.exceptions import InsecureRequestWarning
+
+urllib3.disable_warnings(category=InsecureRequestWarning)
 
 try:
     with open("login.json", "r") as json_file:

@@ -39,5 +39,3 @@ You can run
 and use it as
 
 `./get.py <question_number>`
-
-> If you get warnings don't worry (or you should?) because the certificate is self-signed and I manually turned off the verification
