@@ -4,7 +4,7 @@ Because I'm really lazy and don't want to login EVERY SINGLE TIME when I want to
 
 ## Setup
 
-### Windows (or your Unix-like system has pyenv setup)
+### Windows
 
 If you want to create a virtual environment run these commands, if not, skip this step
 
@@ -20,15 +20,35 @@ Finally to setup some config run
 
 `python setup.py`
 
-> If typed the wrong info just Ctrl+C to quit, it won't wipe the data unless you're finished entering these info
+> If you typed the wrong info just <kbd>Ctrl</kbd> + <kbd>C</kbd> to quit, it won't wipe previous data unless you're finished entering these info
 
 ### Unix-like systems
 
-Basically the same but change `python` to `python3` (maybe change `pip` to `pip3`? idk) and run `source env/bin/activate` instead
+Basically the same but change `python` to `python3` and run `source env/bin/activate` instead
 
-## Execution
+> If your system has pyenv installed, you can run `python` directly
 
-Run `python get.py <question_number>`
+---
+
+## Commands
+
+### Get Question
+
+`python get.py <question_number>`
+
+This command grabs questions and prints to the console, if you want to make it output to a text file, you could use `python get.py <question_number> > file.txt` for now. I will probably add a `-o` flag later on.
+
+### Submit File (WIP)
+
+> This feature is still WIP, don't use it because it could delete your submitted files
+
+`python submit.py <question_number> <selected_file>.py`
+
+This command submits the selected file to the system.
+
+You could probably hook this up with unit testing but currently I'm not planning to implement this feature, if you want to contribute I will accept PRs.
+
+---
 
 ### Unix-like systems
 
