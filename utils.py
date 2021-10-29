@@ -16,7 +16,7 @@ def login(s: Session) -> Tuple[str, str]:
             login_data: Dict[str, str] = json.load(json_file)
 
         with open("config.txt", "r") as config:
-            base_url = f"https://140.124.181.{config.readline()}/upload/"
+            base_url = f"https://140.124.181.{config.readline()}/upload"
 
     except FileNotFoundError:
         print("Not yet setup yet")
