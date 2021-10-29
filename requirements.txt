@@ -8,3 +8,4 @@ six==1.16.0
 soupsieve==2.2.1
 urllib3==1.26.7
 webencodings==0.5.1
+html==1.13
