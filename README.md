@@ -40,7 +40,9 @@ This command grabs questions and prints to the console, if you want to make it o
 
 ### Submit File (WIP)
 
-> This feature is still WIP, don't use it because it could delete your submitted files
+> This feature is still WIP, you may encounter bugs
+
+> It currently deletes existing files every time, I will add conditional checks in future updates
 
 `python submit.py <question_number> <selected_file>.py`
 
