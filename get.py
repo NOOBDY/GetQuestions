@@ -3,7 +3,7 @@ from requests import Session
 from bs4 import BeautifulSoup
 
 from utils import login
-
+import html
 
 def get(s: Session, url: str, index: str) -> None:
     r = s.get(f"{url}/showHomework?hwId={index}", verify=False)
@@ -15,8 +15,7 @@ def get(s: Session, url: str, index: str) -> None:
     print(index)
     if res:
         for line in str(res).split("<br/>")[1:-1]:
-            print(line.strip())
-
+            print(html.unescape(line.strip()))
 
 if __name__ == "__main__":
     with Session() as s:
