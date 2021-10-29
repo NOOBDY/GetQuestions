@@ -5,8 +5,9 @@ from bs4 import BeautifulSoup
 from utils import login
 import html
 
-def get(s: Session, url: str, index: str) -> None:
-    r = s.get(f"{url}/showHomework?hwId={index}", verify=False)
+
+def get(s: Session, base_url: str, index: str) -> None:
+    r = s.get(f"{base_url}/showHomework?hwId={index}", verify=False)
 
     soup = BeautifulSoup(r.content.decode("utf-8"), "html5lib")
     res = soup.find(
@@ -17,7 +18,8 @@ def get(s: Session, url: str, index: str) -> None:
         for line in str(res).split("<br/>")[1:-1]:
             print(html.unescape(line.strip()))
 
+
 if __name__ == "__main__":
     with Session() as s:
-        url, index = login(s)
-        get(s, url, index)
+        base_url, index = login(s)
+        get(s, base_url, index)
