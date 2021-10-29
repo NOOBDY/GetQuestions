@@ -24,9 +24,9 @@ Finally to setup some config run
 
 ### Unix-like systems
 
-Basically the same but change `python` to `python3` and run `source env/bin/activate` instead
+Linux system are recommended to create virtual environments (either through venv or virtualenv) to avoid dependency conflicts (idk about mac tho)
 
-> If your system has pyenv installed, you can run `python` directly
+After creating a virtual environment, you can run `python` as normal
 
 ---
 
@@ -41,8 +41,6 @@ This command grabs questions and prints to the console, if you want to make it o
 ### Submit File (WIP)
 
 > This feature is still WIP, you may encounter bugs
-
-> It currently deletes existing files every time, I will add conditional checks in future updates
 
 `python submit.py <question_number> <selected_file>.py`
 
