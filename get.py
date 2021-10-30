@@ -6,9 +6,9 @@ from utils import login
 
 
 def get(s: Session, base_url: str, index: str) -> None:
-    r = s.get(f"{base_url}/showHomework?hwId={index}", verify=False)
+    r = s.get(f"{base_url}/showHomework?hwId={index}")
 
-    soup = BeautifulSoup(r.content.decode("utf-8"), "html5lib")
+    soup = BeautifulSoup(r.content.decode(), "html5lib")
     res = soup.find(
         "span", style="font-family:標楷體; color:black; behavior:slide; word-wrap:break-word; word-break:normal; font-weight:bold; font-size:medium;")
 
