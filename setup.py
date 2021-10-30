@@ -3,16 +3,12 @@ import json
 _id = input("學號: ")
 passwd = input("密碼: ")
 
-with open("login.json", "w+") as file:
-    login_data = {}
+with open("config.json", "w+") as file:
+    config = {}
 
-    login_data["name"] = _id
-    login_data["passwd"] = passwd
-    login_data["rdoCourse"] = "5"
+    config["name"] = _id
+    config["passwd"] = passwd
+    config["rdoCourse"] = "5"
+    config["base_url"] = f"https://140.124.181.{'36' if int(_id[-3:]) % 2 == 1 else '39'}/upload"
 
-    file.writelines(json.dumps(login_data, indent=4))
-
-with open("config.txt", "w+") as file:
-    address = "36" if int(_id[-3:]) % 2 == 1 else "39"
-
-    file.writelines(address)
+    file.writelines(json.dumps(config, indent=4))

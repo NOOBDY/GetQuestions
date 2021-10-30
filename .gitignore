@@ -140,6 +140,4 @@ cython_debug/
 .vscode/
 env/
 
-login.json
-config.txt
-
+config.json

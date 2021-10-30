@@ -12,11 +12,9 @@ urllib3.disable_warnings(category=InsecureRequestWarning)
 # Implement decorator here to reduce repetition
 def login(s: Session) -> Tuple[str, str]:
     try:
-        with open("login.json", "r") as json_file:
-            login_data: Dict[str, str] = json.load(json_file)
-
-        with open("config.txt", "r") as config:
-            base_url = f"https://140.124.181.{config.readline()}/upload"
+        with open("config.json", "r") as file:
+            login_data: Dict[str, str] = json.load(file)
+            base_url = login_data.pop("base_url")
 
     except FileNotFoundError:
         print("Not yet setup yet")
