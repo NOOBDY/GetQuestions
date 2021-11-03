@@ -46,10 +46,7 @@ def status(s: Session, base_url: str, index: str) -> None:
     if res:
         elements = [i.get_text().strip() for i in res.find_all("td")]
 
-        print(elements)
-
         release_status = ""  # Closed | Now Open | Not Yet Open
-
         test_status = {
             "未繳": "N/A",
             "通過": "Passed",
