@@ -1,5 +1,6 @@
 import json
 import sys
+from sys import exit  # i need to import exit or the binary will complain
 from time import time
 from typing import Dict, Tuple
 
