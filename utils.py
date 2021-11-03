@@ -1,10 +1,12 @@
 import json
 import sys
+from time import time
 from typing import Dict, Tuple
 
 import urllib3
 from bs4 import BeautifulSoup
-from bs4.element import ResultSet, Tag
+from bs4.element import Tag
+from dateutil import parser
 from requests import Session
 from urllib3.exceptions import InsecureRequestWarning
 
@@ -35,7 +37,7 @@ def login(s: Session) -> Tuple[str, str]:
     return base_url, index
 
 
-def checkStatus(s: Session, base_url: str, index: str):
+def status(s: Session, base_url: str, index: str) -> None:
     r = s.get(f"{base_url}/HomeworkBoard")
 
     soup = BeautifulSoup(r.content.decode(), "html5lib")
@@ -46,11 +48,29 @@ def checkStatus(s: Session, base_url: str, index: str):
 
         print(elements)
 
-        testStatus = {
-            "未繳": -1,
-            "通過": 1,
-            "未通過": 0,
+        release_status = ""  # Closed | Now Open | Not Yet Open
+
+        test_status = {
+            "未繳": "N/A",
+            "通過": "Passed",
+            "未通過": "failed",
         }
 
-    isOpen = 0  # closed | now open | not yet open
-    hasPassed = 0  # n/a | failed | passed
+        release_time = parser.parse(elements[3]).timestamp()
+
+        if release_time == 1633017540.0 or elements[4] == "準備中":
+            release_status = "Not Yet Open"
+
+        elif time() - release_time > 0:
+            release_status = "Closed"
+
+        else:
+            release_status = "Now Open"
+
+        print(f"Release Status: {release_status}")
+        print(f"Test Status: {test_status[elements[6]]}")
+
+
+if __name__ == "__main__":
+    print("Don't execute this file directly")
+    exit(0)

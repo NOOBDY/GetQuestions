@@ -7,7 +7,7 @@ import urllib3
 from requests import Session
 from urllib3.exceptions import InsecureRequestWarning
 
-from utils import checkStatus, login
+from utils import status, login
 
 urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -50,4 +50,4 @@ if __name__ == "__main__":
         # delete(s, base_url, index)
         # submit(s, base_url, index, sys.argv[2])
 
-        checkStatus(s, base_url, index)
+        status(s, base_url, index)
