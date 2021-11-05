@@ -38,15 +38,13 @@ After creating a virtual environment, you can run `python` as normal
 
 This command grabs questions and prints to the console, if you want to make it output to a text file, you could use `python get.py <question_number> > file.txt` for now. I will probably add a `-o` flag later on.
 
-### Submit File (WIP)
-
-> This feature is still WIP, you may encounter bugs
+### Submit File
 
 `python submit.py <question_number> <selected_file>.py`
 
 This command submits the selected file to the system.
 
-You could probably hook this up with unit testing but currently I'm not planning to implement this feature, if you want to contribute I will accept PRs.
+> You could probably hook this up with unit testing but currently I'm not planning to implement this feature, if you want to contribute please read [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ---
 
