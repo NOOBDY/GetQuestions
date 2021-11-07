@@ -4,6 +4,7 @@ from sys import exit  # i need to import exit or the binary will complain
 from time import time
 from typing import Dict, List, Tuple
 
+from colorama import init
 import urllib3
 from bs4 import BeautifulSoup
 from bs4.element import Tag
@@ -12,7 +13,7 @@ from requests import Session
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(category=InsecureRequestWarning)
-
+init()
 
 class Colors:
     DEFAULT = "\033[0m"
