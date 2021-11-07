@@ -45,17 +45,19 @@ def status(s: Session, base_url: str, index: str) -> None:
     res: Tag = soup.find_all("tr")[int(index)]
 
     if res:
+        # [index, hw_type, padded_index, due_date, submit_button, pass_status, check_result, passed_list]
         elements = [i.get_text().strip() for i in res.find_all("td")]
 
         release_status = ""  # Closed | Now Open | Not Yet Open
         test_status = {
             "未繳": "N/A",
             "通過": "Passed",
-            "未通過": "failed",
+            "未通過": "Failed",
         }
 
         release_time = parser.parse(elements[3]).timestamp()
 
+        # that number is the default time
         if release_time == 1633017540.0 or elements[4] == "準備中":
             release_status = "Not Yet Open"
 
@@ -65,7 +67,8 @@ def status(s: Session, base_url: str, index: str) -> None:
         else:
             release_status = "Now Open"
 
-        print(f"Release Status: {release_status}")
+        print(f"Release Status: {release_status}", end="")
+        print(f", Due: {elements[3]}" if release_status == "Now Open" else "")
         print(f"Test Status: {test_status[elements[6]]}")
 
 
