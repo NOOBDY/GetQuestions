@@ -2,7 +2,7 @@ import json
 import sys
 from sys import exit  # i need to import exit or the binary will complain
 from time import time
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple
 
 import urllib3
 from bs4 import BeautifulSoup
@@ -70,6 +70,26 @@ def status(s: Session, base_url: str, index: str) -> None:
         print(f"Release Status: {release_status}", end="")
         print(f", Due: {elements[3]}" if release_status == "Now Open" else "")
         print(f"Test Status: {test_status[elements[6]]}")
+
+        if test_status[elements[6]] == "Failed":
+            get_failed(s, base_url, index)
+
+
+def get_failed(s: Session, base_url: str, index: str) -> None:
+    with open("config.json") as file:
+        _id = json.load(file)["name"]
+
+    # you can check other people's upload status while logged in lol
+    r = s.get(
+        f"{base_url}/CheckResult?questionID={index}&studentID={_id}")
+
+    soup = BeautifulSoup(r.content.decode(), "html5lib")
+    res: List[Tag] = list(soup.find_all("tr"))[1:]
+
+    for test in res:
+        case, status = [i.get_text().strip() for i in test.find_all("td")]
+        print(
+            f"Case: {case}, Status: {'Failed' if status == '測試失敗' else 'Passed'}")
 
 
 if __name__ == "__main__":
