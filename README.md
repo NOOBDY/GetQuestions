@@ -2,58 +2,46 @@
 
 Because I'm really lazy and don't want to login EVERY SINGLE TIME when I want to solve questions so I wrote this
 
-## Setup
+## Installation
+
+For Windows and Linux system users, there are now compiled binaries available!
+
+Now you won't be needing to download lots of files and trigger Git!
+
+Download the files based on your system from the Release tab on the right, unpack them into your desired folder and start using.
+
+## Usage
 
 ### Windows
 
-If you want to create a virtual environment run these commands, if not, skip this step
+#### Setup
 
-`python -m venv env`
+`setup.exe`
 
-`env/Scripts/activate`
+Run this script and enter your credentials to create config files. You need to run this script first or the program won't run.
 
-To install required dependencies run this command
+#### Get Question
 
-`pip install -r requirements.txt`
-
-Finally to setup some config run
-
-`python setup.py`
-
-> If you typed the wrong info just <kbd>Ctrl</kbd> + <kbd>C</kbd> to quit, it won't wipe previous data unless you're finished entering these info
-
-### Unix-like systems
-
-Linux system are recommended to create virtual environments (either through venv or virtualenv) to avoid dependency conflicts (idk about mac tho)
-
-After creating a virtual environment, you can run `python` as normal
-
----
-
-## Commands
-
-### Get Question
-
-`python get.py <question_number>`
+`get.exe <question_number>`
 
 This command grabs questions and prints to the console, if you want to make it output to a text file, you could use `python get.py <question_number> > file.txt` for now. I will probably add a `-o` flag later on.
 
-### Submit File
+#### Submit File
 
-`python submit.py <question_number> <selected_file>.py`
+`submit.exe <question_number> <selected_file>.py`
 
 This command submits the selected file to the system.
 
 > You could probably hook this up with unit testing but currently I'm not planning to implement this feature, if you want to contribute please read [CONTRIBUTING.md](./CONTRIBUTING.md)
 
----
+### Linux
 
-### Unix-like systems
+Change `<command>.exe <args>` to `./<command> <args>` and you are good to go.
 
-You can run
+e.g. `./get 24`
 
-`chmod +x get.py`
+> Remember to specify the "`./`" unless you add it to PATH
 
-and use it as
+### MacOS
 
-`./get.py <question_number>`
+I'm not sure whether Linux binaries will run or not. If not, you will have to either use `pyinstaller` or run Python scripts directly from the source code.
