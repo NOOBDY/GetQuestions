@@ -14,6 +14,12 @@ from urllib3.exceptions import InsecureRequestWarning
 urllib3.disable_warnings(category=InsecureRequestWarning)
 
 
+class Colors:
+    DEFAULT = "\033[0m"
+    PASSED = "\033[92m"
+    FAILED = "\033[91m"
+
+
 # Implement decorator here to reduce repetition
 def login(s: Session) -> Tuple[str, str]:
     try:
@@ -49,11 +55,6 @@ def status(s: Session, base_url: str, index: str) -> None:
         elements = [i.get_text().strip() for i in res.find_all("td")]
 
         release_status = ""  # Closed | Now Open | Not Yet Open
-        test_status = {
-            "未繳": "N/A",
-            "通過": "Passed",
-            "未通過": "Failed",
-        }
 
         release_time = parser.parse(elements[3]).timestamp()
 
@@ -67,15 +68,15 @@ def status(s: Session, base_url: str, index: str) -> None:
         else:
             release_status = "Now Open"
 
+        print()
         print(f"Release Status: {release_status}", end="")
         print(f", Due: {elements[3]}" if release_status == "Now Open" else "")
-        print(f"Test Status: {test_status[elements[6]]}")
+        print()
+        if release_status != "Not Yet Open":
+            test_status(s, base_url, index)
 
-        if test_status[elements[6]] == "Failed":
-            get_failed(s, base_url, index)
 
-
-def get_failed(s: Session, base_url: str, index: str) -> None:
+def test_status(s: Session, base_url: str, index: str) -> None:
     with open("config.json") as file:
         _id = json.load(file)["name"]
 
@@ -86,10 +87,19 @@ def get_failed(s: Session, base_url: str, index: str) -> None:
     soup = BeautifulSoup(r.content.decode(), "html5lib")
     res: List[Tag] = list(soup.find_all("tr"))[1:]
 
+    passed = 0
+    failed = 0
+
     for test in res:
         case, status = [i.get_text().strip() for i in test.find_all("td")]
-        print(
-            f"Case: {case}, Status: {'Failed' if status == '測試失敗' else 'Passed'}")
+        if status == '測試失敗':
+            print(Colors.FAILED + f"Case {case}: Failed")
+            failed += 1
+        else:
+            print(Colors.PASSED + f"Case {case}: Passed")
+            passed += 1
+
+    print(Colors.DEFAULT + f"\n{passed} passed, {failed} failed")
 
 
 if __name__ == "__main__":
