@@ -52,15 +52,15 @@ def status(s: Session, base_url: str, index: str) -> None:
     res: Tag = soup.find_all("tr")[int(index)]
 
     if res:
-        # [index, hw_type, padded_index, due_date, submit_button, pass_status, check_result, passed_list]
-        elements = [i.get_text().strip() for i in res.find_all("td")]
+        # [index, hw_type, padded_index, due_date, submit_button, language, pass_status, check_result, passed_list]
+        info = [i.get_text().strip() for i in res.find_all("td")]
 
         release_status = ""  # Closed | Now Open | Not Yet Open
 
-        release_time = parser.parse(elements[3]).timestamp()
+        release_time = parser.parse(info[3]).timestamp()
 
         # that number is the default time
-        if release_time == 1633017540.0 or elements[4] == "準備中":
+        if release_time == 1633017540.0 or info[4] == "準備中":
             release_status = "Not Yet Open"
 
         elif time() - release_time > 0:
@@ -71,9 +71,15 @@ def status(s: Session, base_url: str, index: str) -> None:
 
         print()
         print(f"Release Status: {release_status}", end="")
-        print(f", Due: {elements[3]}" if release_status == "Now Open" else "")
-        print()
+        print(f", Due: {info[3]}" if release_status == "Now Open" else "")
+        print("Test Status: ", end="")
+
+        if info[6] == "未繳":
+            print("Haven't Submitted")
+            return
+
         if release_status != "Not Yet Open":
+            print("\n")
             test_status(s, base_url, index)
 
 
@@ -94,13 +100,15 @@ def test_status(s: Session, base_url: str, index: str) -> None:
     for test in res:
         case, status = [i.get_text().strip() for i in test.find_all("td")]
         if status == '測試失敗':
-            print(Colors.FAILED + f"Case {case}: Failed")
+            print(f" {Colors.DEFAULT}Case {case} {Colors.FAILED}x")
             failed += 1
         else:
-            print(Colors.PASSED + f"Case {case}: Passed")
+            print(f" {Colors.DEFAULT}Case {case} {Colors.PASSED}v")
             passed += 1
 
-    print(Colors.DEFAULT + f"\n{passed} passed, {failed} failed")
+    print()
+    print(f"{Colors.FAILED}FAIL" if failed != 0 else f"{Colors.PASSED}PASS")
+    print(f"{Colors.DEFAULT}{passed} passed, {failed} failed, {len(res)} total")
 
 
 if __name__ == "__main__":
