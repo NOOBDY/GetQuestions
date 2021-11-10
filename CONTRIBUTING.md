@@ -4,6 +4,8 @@
 
 I will checkout pull requests if there are any
 
+Before submitting code, please format it with `autopep8` and put spaces around arithmetic operators
+
 ## Binary Releasing
 
 I am currently using Linux, so I can't build binaries for Windows and Mac systems until I got automated build process figured out(which idk how long it's going to take)
