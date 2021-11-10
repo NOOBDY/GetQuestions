@@ -15,10 +15,12 @@ from urllib3.exceptions import InsecureRequestWarning
 urllib3.disable_warnings(category=InsecureRequestWarning)
 init()
 
+
 class Colors:
     DEFAULT = "\033[0m"
-    PASSED = "\033[92m"
-    FAILED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    RED = "\033[91m"
 
 
 # Implement decorator here to reduce repetition
@@ -55,22 +57,26 @@ def status(s: Session, base_url: str, index: str) -> None:
         # [index, hw_type, padded_index, due_date, submit_button, language, pass_status, check_result, passed_list]
         info = [i.get_text().strip() for i in res.find_all("td")]
 
-        release_status = ""  # Closed | Now Open | Not Yet Open
+        release_status = ""  # Closed | Now Open | Not Yet Open | Preparing
 
         release_time = parser.parse(info[3]).timestamp()
 
         # that number is the default time
-        if release_time == 1633017540.0 or info[4] == "準備中":
-            release_status = "Not Yet Open"
+        if release_time == 1633017540.0:
+            release_status = f"{Colors.RED}Not Yet Open"
+
+        elif info[4] == "準備中":
+            release_status = f"{Colors.YELLOW}Preparing"
 
         elif time() - release_time > 0:
-            release_status = "Closed"
+            release_status = f"{Colors.RED}Closed"
 
         else:
-            release_status = "Now Open"
+            release_status = f"{Colors.GREEN}Now Open"
 
         print()
-        print(f"Release Status: {release_status}", end="")
+        print(f"Release Status: {release_status}", end=f"{Colors.DEFAULT}")
+        release_status = release_status[5:]  # remove color characters
         print(f", Due: {info[3]}" if release_status == "Now Open" else "")
         print("Test Status: ", end="")
 
@@ -100,14 +106,14 @@ def test_status(s: Session, base_url: str, index: str) -> None:
     for test in res:
         case, status = [i.get_text().strip() for i in test.find_all("td")]
         if status == '測試失敗':
-            print(f" {Colors.DEFAULT}Case {case} {Colors.FAILED}x")
+            print(f" {Colors.DEFAULT}Case {case} {Colors.RED}x")
             failed += 1
         else:
-            print(f" {Colors.DEFAULT}Case {case} {Colors.PASSED}v")
+            print(f" {Colors.DEFAULT}Case {case} {Colors.GREEN}v")
             passed += 1
 
     print()
-    print(f"{Colors.FAILED}FAIL" if failed != 0 else f"{Colors.PASSED}PASS")
+    print(f"{Colors.RED}FAIL" if failed != 0 else f"{Colors.GREEN}PASS")
     print(f"{Colors.DEFAULT}{passed} passed, {failed} failed, {len(res)} total")
 
 
