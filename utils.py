@@ -83,7 +83,7 @@ def status(s: Session, base_url: str, index: str) -> None:
             print("Haven't Submitted")
             return
 
-        if release_status != "Not Yet Open" and release_status != "Preparing":
+        if release_status != "Not Yet Open":
             print("\n")
             test_status(s, base_url, index)
 
