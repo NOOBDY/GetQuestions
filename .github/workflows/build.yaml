@@ -28,6 +28,7 @@ jobs:
           pyinstaller -F setup.py
           pyinstaller -F get.py
           pyinstaller -F submit.py
+          zip ${{ matrix.os }}-release ./dist
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
@@ -55,6 +56,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ matrix.os }}-release.zip
+          asset_path: ./dist
           asset_name: ${{ matrix.os }}-release.zip
           asset_content_type: application/zip
