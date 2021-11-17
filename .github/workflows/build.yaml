@@ -1,6 +1,9 @@
-name: Build Package
+name: Build
 
-on: [push]
+on:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   build:
@@ -28,3 +31,23 @@ jobs:
           pyinstaller -F setup.py
           pyinstaller -F get.py
           pyinstaller -F submit.py
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+      - name: Upload Release
+        id: upload-release-assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ matrix.os }}-release.zip
+          asset_name: ${{ matrix.os }}-release.zip
+          asset_content_type: application/zip
