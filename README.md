@@ -1,5 +1,7 @@
 # Question Fetcher
 
+![Build](https://github.com/NOOBDY/GetQuestions/actions/workflows/build.yaml/badge.svg)
+
 Because I'm really lazy and don't want to login EVERY SINGLE TIME when I want to solve questions so I wrote this
 
 ## Installation
