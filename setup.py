@@ -1,7 +1,8 @@
 import json
+from getpass import getpass
 
 _id = input("學號: ")
-passwd = input("密碼: ")
+passwd = getpass("密碼: ")
 
 with open("config.json", "w+") as file:
     config = {}

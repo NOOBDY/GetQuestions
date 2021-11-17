@@ -77,7 +77,7 @@ def status(s: Session, base_url: str, index: str) -> None:
         print()
         print(f"Release Status: {release_status}", end=f"{Colors.DEFAULT}")
         release_status = release_status[5:]  # remove color characters
-        print(f", Due: {info[3]}" if release_status == "Now Open" else "")
+        print(f", Due: {info[3]}" if release_status != "Not Yet Open" else "")
         print("Test Status: ", end="")
 
         if info[6] == "未繳":
