@@ -21,7 +21,7 @@ jobs:
         run: |
           python -m pip install -U pip setuptools wheel
           pip install pyinstaller
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -r requirements.txt
 
       - name: Build Binaries
         run: |
