@@ -9,10 +9,10 @@ from bs4 import BeautifulSoup
 from bs4.element import Tag
 from dateutil import parser
 from requests import Session
+from requests.exceptions import SSLError
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(category=InsecureRequestWarning)
-
 
 
 class Colors:
@@ -43,7 +43,13 @@ def login(s: Session) -> Tuple[str, str]:
 
     s.post(f"{base_url}/Login", login_data, verify=False)
 
-    return base_url, index
+    try:
+        s.get(f"{base_url}/MainMenu")
+        return base_url, index
+
+    except SSLError:
+        print("Wrong username or password")
+        exit(1)
 
 
 def status(s: Session, base_url: str, index: str) -> None:
