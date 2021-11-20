@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from bs4.element import Tag
 from dateutil import parser
 from requests import Session
-from requests.exceptions import SSLError
+from requests.exceptions import ConnectTimeout, SSLError
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(category=InsecureRequestWarning)
@@ -41,11 +41,14 @@ def login(s: Session) -> Tuple[str, str]:
 
     index = f"{int(args[1]):03}"
 
-    s.post(f"{base_url}/Login", login_data, verify=False)
-
     try:
+        s.post(f"{base_url}/Login", login_data, verify=False, timeout=2)
         s.get(f"{base_url}/MainMenu")
         return base_url, index
+
+    except ConnectTimeout:
+        print("Not connected to school network")
+        exit(1)
 
     except SSLError:
         print("Wrong username or password")
