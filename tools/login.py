@@ -23,36 +23,39 @@ class Colors:
 
 
 # Implement decorator here to reduce repetition
-def login(s: Session) -> Tuple[str, str]:
+def login(s: Session):
+    err = None
+    index = ""
+    base_url = ""
     try:
         with open("config.json", "r") as file:
             login_data: Dict[str, str] = json.load(file)
             base_url = login_data.pop("base_url")
 
+        args = sys.argv
+
+        if len(args) == 1:
+            print("No question selected")
+            exit(1)
+
+        index = f"{int(args[1]):03}"
+
+        try:
+            s.post(f"{base_url}/Login", login_data, verify=False, timeout=2)
+            s.get(f"{base_url}/MainMenu")
+            return base_url, index
+
+        except ConnectTimeout:
+            print("Not connected to school network")
+            return "", "",
+
+        except SSLError:
+            print("Wrong username or password")
+            exit(1)
+
     except FileNotFoundError:
         print("Not yet setup yet")
-        exit(1)
-
-    args = sys.argv
-
-    if len(args) == 1:
-        print("No question selected")
-        exit(1)
-
-    index = f"{int(args[1]):03}"
-
-    try:
-        s.post(f"{base_url}/Login", login_data, verify=False, timeout=2)
-        s.get(f"{base_url}/MainMenu")
-        return base_url, index
-
-    except ConnectTimeout:
-        print("Not connected to school network")
-        exit(1)
-
-    except SSLError:
-        print("Wrong username or password")
-        exit(1)
+        return "", "", FileNotFoundError
 
 
 def status(s: Session, base_url: str, index: str) -> None:
