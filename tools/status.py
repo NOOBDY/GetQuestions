@@ -24,19 +24,19 @@ def status(s: Session, base_url: str, index: str) -> None:
 
         # that number is the default time
         if release_time == 1633017540.0:
-            release_status = f"{Colors.RED}Not Yet Open"
+            release_status = f"Not Yet Open"
 
         elif info[4] == "準備中":
-            release_status = f"{Colors.YELLOW}Preparing"
+            release_status = f"Preparing"
 
         elif time() - release_time > 0:
-            release_status = f"{Colors.RED}Closed"
+            release_status = f"Closed"
 
         else:
-            release_status = f"{Colors.GREEN}Now Open"
+            release_status = f"Now Open"
 
         print()
-        print(f"Release Status: {release_status}", end=f"{Colors.DEFAULT}")
+        print(f"Release Status: {release_status}")
         release_status = release_status[5:]  # remove color characters
         print(f", Due: {info[3]}" if release_status != "Not Yet Open" else "")
         print("Test Status: ", end="")
@@ -67,12 +67,12 @@ def test_status(s: Session, base_url: str, index: str) -> None:
     for test in res:
         case, status = [i.get_text().strip() for i in test.find_all("td")]
         if status == '測試失敗':
-            print(f" {Colors.DEFAULT}Case {case} {Colors.RED}x")
+            print(f" Case {case} x")
             failed += 1
         else:
-            print(f" {Colors.DEFAULT}Case {case} {Colors.GREEN}v")
+            print(f" Case {case} v")
             passed += 1
 
     print()
-    print(f"{Colors.RED}FAIL" if failed != 0 else f"{Colors.GREEN}PASS")
-    print(f"{Colors.DEFAULT}{passed} passed, {failed} failed, {len(res)} total")
+    print(f"FAIL" if failed != 0 else f"PASS")
+    print(f"{passed} passed, {failed} failed, {len(res)} total")
