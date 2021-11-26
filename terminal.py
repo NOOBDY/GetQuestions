@@ -18,6 +18,12 @@ from utils._setup import setup
 urllib3.disable_warnings()
 
 if __name__ == '__main__':
+    args = sys.argv
+
+    if args[1] == "setup":
+        setup()
+        exit(1)
+
     try:
         with open("./config.json", "r") as file:
             login_data = json.load(file)
@@ -25,11 +31,6 @@ if __name__ == '__main__':
 
     except FileNotFoundError:
         print("Not yet setup yet")
-        exit(1)
-
-    args = sys.argv
-    if args[1] == "setup":
-        setup()
         exit(1)
 
     with JykuoSession(base_url) as s:
