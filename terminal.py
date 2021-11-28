@@ -36,13 +36,21 @@ if __name__ == '__main__':
     with JykuoSession(base_url) as s:
         try:
             s.login(login_data)
-            if args[1] == "get":
+            if args[1] == "get" and args[2] == "all":
+                question_statuses = s.get_question_statuses()
+                print(f"Index  Realease Status  {'Duo Date':<17}  Submit Status")
+                for key in question_statuses:
+                    a = question_statuses[key]
+                    print(f"{key:>5}  {a['release_status']:<15}  {a['duo_date']:<17}  {a['submit_status']}")
+                exit(1)
+
+            elif args[1] == "get":
                 index = args[2].rjust(3, '0')
                 content = s.get(index)
                 print(content)
-
                 exit(1)
-            if args[1] == "submit":
+
+            elif args[1] == "submit":
                 index = args[2].rjust(3, '0')
                 file_path = args[3]
                 s.delete(index)
