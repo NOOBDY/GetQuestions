@@ -16,6 +16,7 @@ def setup():
 
         file.writelines(json.dumps(config, indent=4))
 
+
 if __name__ == "__main__":
     print("Don't execute this file directly")
     exit(0)

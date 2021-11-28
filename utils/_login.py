@@ -8,6 +8,7 @@ def _login(self, login_data: Dict[str, str]) -> Tuple[str, str]:
     session.post(f"{base_url}/Login", login_data, verify=False, timeout=2)
     session.get(f"{base_url}/MainMenu")
 
+
 if __name__ == "__main__":
     print("Don't execute this file directly")
     exit(0)

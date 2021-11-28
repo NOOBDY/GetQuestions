@@ -13,7 +13,8 @@ from requests.exceptions import ConnectTimeout, SSLError
 from urllib3.exceptions import InsecureRequestWarning
 
 from ._login import _login
-from ._status import _statuses
+from ._get_question_statuses import _get_question_statuses
+from ._get_test_status import _get_test_status
 from ._get import _get
 from ._submit import _submit, _delete
 
@@ -35,7 +36,8 @@ class JykuoSession:
 
     login = _login
     get = _get
-    get_question_statuses = _statuses
+    get_question_statuses = _get_question_statuses
+    get_test_status = _get_test_status
     submit = _submit
     delete = _delete
 
