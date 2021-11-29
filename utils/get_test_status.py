@@ -1,6 +1,7 @@
+from typing import Dict
+
 import urllib3
 from bs4 import BeautifulSoup
-from bs4.element import Tag
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(category=InsecureRequestWarning)
@@ -15,10 +16,9 @@ def _get_test_status(self, id_: int, index: str) -> Dict[str, bool]:
         f"{base_url}/CheckResult?questionID={index}&studentID={id_}")
 
     soup = BeautifulSoup(res.content.decode(), "html5lib")
-    res: List[Tag] = list(soup.find_all("tr"))[1:]
 
     cases = {}
-    for test in res:
+    for test in list(soup.find_all("tr"))[1:]:
         case, status = [i.get_text().strip() for i in test.find_all("td")]
         cases[case] = status != '測試失敗'
 

@@ -1,22 +1,15 @@
 import json
 import sys
 from sys import exit  # i need to import exit or the binary will complain
-from time import time
-from typing import Dict, List, Tuple
 
 import urllib3
-from bs4 import BeautifulSoup
-from bs4.element import Tag
-from dateutil import parser
-from requests import Session
 from requests.exceptions import ConnectTimeout, SSLError
 from urllib3.exceptions import InsecureRequestWarning
 
 from utils import JykuoSession
 from utils.setup import setup
 
-urllib3.disable_warnings()
-
+urllib3.disable_warnings(category=InsecureRequestWarning)
 
 class Colors:
     DEFAULT = "\033[0m"
@@ -34,18 +27,19 @@ def show_status(q_status: dict, t_status: dict) -> None:
     print(
         f"Realese Status: {r_scolor}{q_status['release_status']}{Colors.DEFAULT}, Due: {q_status['duo_date']}")
     print("Test Status:")
-
-    passed = 0
-    failed = 0
-
-    for case in t_status:
-        if t_status[case]:
-            print(f" Case {case} {Colors.GREEN}v{Colors.DEFAULT}")
-            passed += 1
-        else:
-            print(f" Case {case} {Colors.RED}x{Colors.DEFAULT}")
-            failed += 1
-    print(f"{Colors.GREEN}{passed} passed, {Colors.RED}{failed} failed, {Colors.DEFAULT}{len(t_status)} total")
+    if len(t_status) != 0:
+        passed = 0
+        failed = 0
+        for case in t_status:
+            if t_status[case]:
+                print(f" Case {case} {Colors.GREEN}v{Colors.DEFAULT}")
+                passed += 1
+            else:
+                print(f" Case {case} {Colors.RED}x{Colors.DEFAULT}")
+                failed += 1
+        print(f"{Colors.GREEN}{passed} passed, {Colors.RED}{failed} failed, {Colors.DEFAULT}{len(t_status)} total")
+    else:
+        print(" Not Submit Yet")
 
 
 if __name__ == '__main__':

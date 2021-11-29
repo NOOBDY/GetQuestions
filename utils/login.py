@@ -1,7 +1,7 @@
 from typing import Dict
 
 
-def _login(self, login_data: Dict[str, str]) -> Tuple[str, str]:
+def _login(self, login_data: Dict[str, str]) -> None:
     session = self.session
     base_url = self.base_url
 
