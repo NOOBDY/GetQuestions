@@ -1,22 +1,10 @@
-import json
-import sys
-from sys import exit  # i need to import exit or the binary will complain
-from time import time
-from typing import Dict, List, Tuple
-
-import urllib3
-from bs4 import BeautifulSoup
-from bs4.element import Tag
-from dateutil import parser
 from requests import Session
-from requests.exceptions import ConnectTimeout, SSLError
-from urllib3.exceptions import InsecureRequestWarning
 
-from ._login import _login
-from ._get_question_statuses import _get_question_statuses
-from ._get_test_status import _get_test_status
-from ._get import _get
-from ._submit import _submit, _delete
+from .login import _login
+from .get_question_statuses import _get_question_statuses
+from .get_test_status import _get_test_status
+from .get import _get
+from .submit import _submit, _delete
 
 
 class JykuoSession:
@@ -40,8 +28,3 @@ class JykuoSession:
     get_test_status = _get_test_status
     submit = _submit
     delete = _delete
-
-
-if __name__ == "__main__":
-    print("Don't execute this file directly")
-    exit(0)

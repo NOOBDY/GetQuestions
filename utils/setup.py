@@ -15,8 +15,3 @@ def setup():
         config["base_url"] = f"https://140.124.181.{'36' if int(_id[-3:]) % 2 == 1 else '39'}/upload"
 
         file.writelines(json.dumps(config, indent=4))
-
-
-if __name__ == "__main__":
-    print("Don't execute this file directly")
-    exit(0)

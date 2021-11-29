@@ -13,7 +13,7 @@ from requests.exceptions import ConnectTimeout, SSLError
 from urllib3.exceptions import InsecureRequestWarning
 
 from utils import JykuoSession
-from utils._setup import setup
+from utils.setup import setup
 
 urllib3.disable_warnings()
 

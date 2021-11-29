@@ -1,15 +1,9 @@
-import json
-import sys
-from sys import exit  # i need to import exit or the binary will complain
 from time import time
-from typing import Dict, List, Tuple
+from typing import Dict
 
 import urllib3
 from bs4 import BeautifulSoup
-from bs4.element import Tag
 from dateutil import parser
-from requests import Session
-from requests.exceptions import ConnectTimeout, SSLError
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(category=InsecureRequestWarning)
@@ -50,8 +44,3 @@ def _get_question_statuses(self) -> Dict[str, Dict[str, str]]:
             "submit_status": submit_status,
         }
     return question_statuses
-
-
-if __name__ == "__main__":
-    print("Don't execute this file directly")
-    exit(0)

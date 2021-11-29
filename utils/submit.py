@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 import json
-import sys
 from time import time
 
 import urllib3
-from requests import Session
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(category=InsecureRequestWarning)
-
 
 def _delete(self, index: str) -> None:
     session = self.session
